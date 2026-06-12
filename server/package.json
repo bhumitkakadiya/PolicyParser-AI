@@ -1,0 +1,23 @@
+{
+  "name": "insurance-extractor-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend API for Insurance PDF data extraction using Gemini AI",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^0.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "mongoose": "^8.9.0",
+    "multer": "^1.4.5-lts.1",
+    "pdf2json": "^4.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
