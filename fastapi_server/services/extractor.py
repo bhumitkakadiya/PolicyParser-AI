@@ -33,11 +33,11 @@ def parse_pdf_to_text(pdf_bytes: bytes) -> str:
             text += page_text + "\n"
     return text
 
-def generate_with_retry(model, contents, max_retries=3):
+def generate_with_retry(model, contents, max_retries=3, **kwargs):
     last_error = None
     for attempt in range(1, max_retries + 1):
         try:
-            return model.generate_content(contents)
+            return model.generate_content(contents, **kwargs)
         except Exception as e:
             last_error = e
             err_msg = str(e).lower()
@@ -157,7 +157,12 @@ async def extract_from_pdf(pdf_bytes: bytes, api_key: str) -> dict:
     MAX_RETRIES = 3
     print(f'[GEMINI] Extracting data using {policy_type} schema...')
     try:
-        response = generate_with_retry(model, extraction_contents, MAX_RETRIES)
+        response = generate_with_retry(
+            model, 
+            extraction_contents, 
+            MAX_RETRIES, 
+            generation_config={"response_mime_type": "application/json"}
+        )
         text = response.text.strip()
         print('[GEMINI] Response received. Parsing JSON...')
 
